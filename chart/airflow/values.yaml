@@ -3,6 +3,12 @@ images:
     repository: ghcr.io/nutthapongkanna/airflow
     tag: latest
 
+api:
+  enabled: false
+
+redis:
+  enabled: true
+
 webserver:
   service:
     type: LoadBalancer

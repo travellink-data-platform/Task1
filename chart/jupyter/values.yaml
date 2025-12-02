@@ -1,8 +1,9 @@
 singleuser:
   image:
-    repository: ghcr.io/nutthapongkanna/่jupyter
+    name: ghcr.io/nutthapongkanna/jupyter
     tag: latest
 
 proxy:
   service:
     type: LoadBalancer
+

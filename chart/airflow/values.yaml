@@ -3,15 +3,13 @@ images:
     repository: ghcr.io/nutthapongkanna/airflow
     tag: latest
 
-api:
-  enabled: false
+apiServer:
+  service:
+    type: LoadBalancer
 
 redis:
   enabled: true
 
-webserver:
-  service:
-    type: LoadBalancer
 
 postgresql:
   enabled: true

@@ -1,0 +1,8 @@
+singleuser:
+  image:
+    name: asia.gcr.io/nutthapong/jupyter
+    tag: latest
+
+proxy:
+  service:
+    type: LoadBalancer

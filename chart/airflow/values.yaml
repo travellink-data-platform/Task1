@@ -1,0 +1,8 @@
+images:
+  airflow:
+    repository: asia.gcr.io/nutthapong/airflow
+    tag: latest
+
+webserver:
+  service:
+    type: LoadBalancer

@@ -1,23 +1,26 @@
 #!/bin/bash
-
-# Stop on errors
 set -e
 
-# Variables
 IMAGE_NAME="airflow"
 IMAGE_TAG="latest"
-REGISTRY="asia.gcr.io"
-PROJECT_ID="$GCP_PROJECT"   # export GCP_PROJECT ก่อนใช้
+REGISTRY="ghcr.io"
+USER_NAME="${GITHUB_USER}"
 
-FULL_IMAGE="$REGISTRY/$PROJECT_ID/$IMAGE_NAME:$IMAGE_TAG"
+if [ -z "$USER_NAME" ]; then
+    echo "❌ ERROR: GITHUB_USER not set"
+    echo "set with: export GITHUB_USER=your-name"
+    exit 1
+fi
 
-echo "🚀 Building Airflow image..."
-docker build -t $IMAGE_NAME:$IMAGE_TAG -f docker/airflow/Dockerfile .
+FULL_IMAGE="$REGISTRY/$USER_NAME/$IMAGE_NAME:$IMAGE_TAG"
 
-echo "🏷️ Tagging image as: $FULL_IMAGE"
-docker tag $IMAGE_NAME:$IMAGE_TAG $FULL_IMAGE
+echo "🚀  Building Airflow image..."
+docker build -t "$IMAGE_NAME:$IMAGE_TAG" -f docker/airflow/Dockerfile .
 
-echo "📤 Pushing image to registry..."
-docker push $FULL_IMAGE
+echo "🏷️  Tagging image: $FULL_IMAGE"
+docker tag "$IMAGE_NAME:$IMAGE_TAG" "$FULL_IMAGE"
 
-echo "✅ Done: $FULL_IMAGE"
+echo "📤  Pushing image to GHCR..."
+docker push "$FULL_IMAGE"
+
+echo "✅  Done: $FULL_IMAGE"

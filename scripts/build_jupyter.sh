@@ -1,20 +1,26 @@
 #!/bin/bash
 set -e
 
-IMAGE_NAME="airflow"
+IMAGE_NAME="jupyter"
 IMAGE_TAG="latest"
-
-GITHUB_USER="nutthapongkanna"
 REGISTRY="ghcr.io"
-FULL_IMAGE="$REGISTRY/$GITHUB_USER/$IMAGE_NAME:$IMAGE_TAG"
+USER_NAME="${GITHUB_USER}"
 
-echo "🚀 Building Airflow image..."
-docker build -t $IMAGE_NAME:$IMAGE_TAG -f docker/airflow/Dockerfile .
+if [ -z "$USER_NAME" ]; then
+    echo "❌ ERROR: GITHUB_USER not set"
+    echo "set with: export GITHUB_USER=your-name"
+    exit 1
+fi
 
-echo "🏷️ Tagging image as: $FULL_IMAGE"
-docker tag $IMAGE_NAME:$IMAGE_TAG $FULL_IMAGE
+FULL_IMAGE="$REGISTRY/$USER_NAME/$IMAGE_NAME:$IMAGE_TAG"
 
-echo "📤 Pushing image to GHCR..."
-docker push $FULL_IMAGE
+echo "🚀  Building Jupyter image..."
+docker build -t "$IMAGE_NAME:$IMAGE_TAG" -f docker/jupyter/Dockerfile .
 
-echo "✅ Done: $FULL_IMAGE"
+echo "🏷️  Tagging image: $FULL_IMAGE"
+docker tag "$IMAGE_NAME:$IMAGE_TAG" "$FULL_IMAGE"
+
+echo "📤  Pushing image to GHCR..."
+docker push "$FULL_IMAGE"
+
+echo "✅  Done: $FULL_IMAGE"

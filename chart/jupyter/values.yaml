@@ -1,6 +1,6 @@
 singleuser:
   image:
-    name: asia.gcr.io/nutthapong/jupyter
+    repository: ghcr.io/nutthapongkanna/่jupyter
     tag: latest
 
 proxy:

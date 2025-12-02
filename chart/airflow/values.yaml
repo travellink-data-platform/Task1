@@ -1,8 +1,13 @@
 images:
   airflow:
-    repository: asia.gcr.io/nutthapong/airflow
+    repository: ghcr.io/nutthapongkanna/airflow
     tag: latest
 
 webserver:
   service:
     type: LoadBalancer
+
+postgresql:
+  enabled: true
+  image:
+    tag: latest

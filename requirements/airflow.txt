@@ -1,3 +1,6 @@
-apache-airflow==3.0.2
-pandas==2.2.2
-requests==2.32.3
+apache-airflow-providers-google
+apache-airflow-providers-cncf-kubernetes
+
+pandas
+numpy
+requests

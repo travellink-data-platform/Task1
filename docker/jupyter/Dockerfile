@@ -1,11 +1,18 @@
-FROM jupyter/base-notebook:python-3.10
+# docker/jupyter/Dockerfile
+# Jupyter image สำหรับ data scientist
+
+FROM jupyter/base-notebook:latest
 
 USER root
 
-COPY requirements/jupyter.txt /tmp/requirements.txt
+# ติดตั้ง system libs ที่จำเป็นถ้ามี
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tzdata && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install build deps only if required by packages
-RUN pip install --no-cache-dir --user -r /tmp/requirements.txt && \
-    rm -f /tmp/requirements.txt
+# copy requirements ของ jupyter
+COPY requirements/jupyter.txt /requirements.txt
 
-USER $NB_UID
+RUN pip install --no-cache-dir -r /requirements.txt
+
+USER ${NB_USER}

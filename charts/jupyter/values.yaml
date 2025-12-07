@@ -1,0 +1,26 @@
+# chart/jupyter/values.yaml
+
+proxy:
+  service:
+    type: LoadBalancer
+
+singleuser:
+  image:
+    name: ghcr.io/nutthapongkanna/jupyter
+    tag: latest
+  storage:
+    capacity: 10Gi
+    dynamic:
+      storageClass: standard-rwo
+
+hub:
+  config:
+    JupyterHub:
+      admin_access: true
+    Authenticator:
+      admin_users:
+        - admin
+    DummyAuthenticator:
+      enabled: true
+  extraEnv:
+    PYTHONWARNINGS: "ignore"

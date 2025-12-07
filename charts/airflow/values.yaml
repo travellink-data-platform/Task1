@@ -1,0 +1,68 @@
+# chart/airflow/values.yaml
+
+executor: CeleryExecutor
+
+core:
+  loadExamples: true
+
+# Image หลักของ Airflow (ใช้ของเราเองจาก GHCR)
+defaultAirflowRepository: ghcr.io/nutthapongkanna/airflow
+defaultAirflowTag: latest
+
+# Expose UI ผ่าน API server (Airflow 3.x)
+apiServer:
+  service:
+    type: LoadBalancer
+
+webserver:
+  defaultUser:
+    enabled: true
+    username: admin
+    password: admin
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+
+  service:
+    type: ClusterIP   # ไม่ต้อง LB เพราะ UI ผ่าน api-server
+
+postgresql:
+  enabled: true
+  image:
+    repository: postgres
+    tag: "16"
+
+  persistence:
+    enabled: false
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+redis:
+  enabled: true
+  persistence:
+    enabled: false
+
+workers:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1500m
+      memory: 2Gi
+
+scheduler:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+
+logs:
+  persistence:
+    enabled: false

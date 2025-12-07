@@ -1,9 +1,0 @@
-singleuser:
-  image:
-    name: ghcr.io/nutthapongkanna/jupyter
-    tag: latest
-
-proxy:
-  service:
-    type: LoadBalancer
-
